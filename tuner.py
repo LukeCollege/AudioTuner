@@ -142,9 +142,12 @@ def audio():
     hps = harmonic_product_spectrum(spectrum)
     low = int(60 * N/f)
     high = int(1500 * N/f)
+    test_peak = max(spectrum[low:high])
 
     freqs = np.arange(N//2) * f / N
     k = int(np.argmax(hps[low:high])) + low
+    if spectrum[k] < 0.1 * test_peak:
+        k = int(np.argmax(spectrum[low:high])) + low
 
     x = list(freqs[k-3:k+4])
     y = list(spectrum[k-3:k+4])
